@@ -30,11 +30,24 @@
 
 ### Serverless
 
-先Fork到自己的仓库，再修改自己仓库里`src/_config.ts`，  
-修改`regions`：若需代理hk香港地区，则填写`hkg1`(默认)。  
+先Fork到自己的仓库，再修改自己仓库里`src/_config.ts`。  
+函数节点在 Vercel 项目设置里选：项目 → Settings → Functions → Region（本仓库不再在 `vercel.json` 里写死，方便同一仓库部署多个地区）。  
 在设置中配置 域名和环境变量。  
 若需使用Vercel Storage的Postgresql数据库，请连接至此项目；或使用其它pg数据库。重部署后访问`https://{yourDomain}/api/admin/init?s=${配置填写的secret}`，并检查数据库是否已有`blacklist` `cache` `log`三个表。
 Tips: 环境变量设置后需下一次部署才可启用，故推荐导入时提前设置。  
+
+#### 多地区部署
+
+一个部署只能解锁一个地区（由函数出口 IP 决定）。要解锁多个地区，就让本仓库再建几个 Vercel 项目（可以绑定同一个仓库、同一条分支），只改各自项目的 Functions Region：
+
+| 地区 | Vercel 节点 |
+| --- | --- |
+| 香港 | `hkg1` |
+| 泰区/东南亚 | `sin1` |
+| 日本/韩国 | `hnd1` / `icn1`（B站无对应区，一般用不上） |
+
+Vercel 没有台湾和大陆节点，这两个地区需要部署在台湾/国内服务器上（见下方「本地」）。  
+每个实例用各自的子域名（如 `hk.example.com`、`th.example.com`），数据库环境变量可以共用一套。  
 
 ### 本地
 
