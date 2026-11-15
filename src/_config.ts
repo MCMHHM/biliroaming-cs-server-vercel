@@ -233,7 +233,9 @@ export const whitelist_vip_enabled: io = 0;
 
 //===================获取公共黑白名单============================
 //功能开关 1-开 0-关
-export const public_blacklist_enabled: io = 1;
+//注：默认的 black.qimo.ink 已失效(2026-11 起域名无法解析)，故默认关闭；
+//如需同步公共黑名单，请改成你能访问的地址再把开关设为 1。
+export const public_blacklist_enabled: io = 0;
 //公共黑名单地址 要求：URL后需可以直接加 UID/mid
 export const public_blacklist: string = "https://black.qimo.ink/api/users/";
 //============================================================
